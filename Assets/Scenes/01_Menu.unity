@@ -834,7 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621631090219cb246b9ccd7f3f62686a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  urlToMessage: https://raw.githubusercontent.com/luisplata/galaga1981/master/README.md
+  urlToMessage: https://raw.githubusercontent.com/luisplata/navecita/main/README.md
   ranking: {fileID: 887337829}
   message: {fileID: 1282633324}
 --- !u!114 &514542782
@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Galaga
+  m_text: Navecita
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4539f0ea1b16654a82754dc1d7d1ed4, type: 2}
   m_sharedMaterial: {fileID: 8632771352152209041, guid: b4539f0ea1b16654a82754dc1d7d1ed4,

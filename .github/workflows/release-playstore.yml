@@ -111,7 +111,7 @@ jobs:
           projectPath: .
           targetPlatform: Android
           androidExportType: androidAppBundle
-          buildName: Galaga1981
+          buildName: Navecita
           buildsPath: build
           versioning: Custom
           version: ${{ needs.validate.outputs.version }}
@@ -132,7 +132,7 @@ jobs:
           fi
           echo "Found AAB: $AAB"
           mkdir -p release
-          cp "$AAB" "release/Galaga1981-${VERSION}.aab"
+          cp "$AAB" "release/Navecita-${VERSION}.aab"
           ls -la release
 
       - uses: actions/upload-artifact@v4
@@ -162,7 +162,7 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.validate.outputs.tag }}
-          name: Galaga1981 ${{ needs.validate.outputs.tag }}
+          name: Navecita ${{ needs.validate.outputs.tag }}
           # NO usar target_commitish con un SHA: GITHUB_TOKEN devuelve 403
           # ("Resource not accessible by integration") si ese commit ya no es el
           # HEAD. Dejamos el commit del build en el cuerpo para trazabilidad.
@@ -170,4 +170,4 @@ jobs:
             Build commit: `${{ github.sha }}`
             Version code: `${{ needs.validate.outputs.versionCode }}`
             Versión: `${{ needs.validate.outputs.version }}`
-          files: release/Galaga1981-${{ needs.validate.outputs.version }}.aab
+          files: release/Navecita-${{ needs.validate.outputs.version }}.aab

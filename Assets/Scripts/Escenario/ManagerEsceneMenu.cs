@@ -15,7 +15,7 @@ public class ManagerEsceneMenu : MonoBehaviour
     private void Start()
     {
         ranking.text = "";
-        StartCoroutine(GetRequest("https://juegos.peryloth.com/api/" + "score/best/galaga"));
+        StartCoroutine(GetRequest("https://juegos.peryloth.com/api/" + "score/best/navecita"));
         StartCoroutine(GetRequestMessage(urlToMessage));
     }
 

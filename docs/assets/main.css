@@ -1,10 +1,10 @@
-/* Galaga 1981 — shared stylesheet for docs pages */
+/* Navecita — shared stylesheet for docs pages */
 :root {
   --bg: #05050a;
   --card: #101018;
   --text: #e8e8f0;
   --muted: #9a9ab0;
-  --accent: #f4b400; /* Galaga yellow */
+  --accent: #f4b400; /* accent */
   --border: #2a2a3a;
 }
 * { box-sizing: border-box; }

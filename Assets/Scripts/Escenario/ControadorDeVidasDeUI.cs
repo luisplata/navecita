@@ -14,7 +14,7 @@ public class ControadorDeVidasDeUI : MonoBehaviour
     {
 
         ranking.text = "";
-        StartCoroutine(GetRequest("URL" + "score/best/galaga"));
+        StartCoroutine(GetRequest("URL" + "score/best/navecita"));
     }
 
     public void ActualizarVidas()

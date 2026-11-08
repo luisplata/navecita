@@ -8,7 +8,7 @@ namespace V2
     /// </summary>
     public static class HighScoreStore
     {
-        public const string Key = "galaga1981.v2.record";
+        public const string Key = "navecita.v2.record";
 
         /// <summary>Récord vigente; sanitiza negativos (PlayerPrefs es editable a mano).</summary>
         public static int Load()

@@ -19,7 +19,7 @@ public class Score
 
     public void ConsultarTop3()
     {
-        string uri = endPoint_api + "score/best/galaga";
+        string uri = endPoint_api + "score/best/navecita";
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
             // Request and wait for the desired page.
@@ -40,7 +40,7 @@ public class Score
 
     public Score[] ConsultarTop10()
     {
-        string ednPoint_top = endPoint_api+ "score/best/galaga";
+        string ednPoint_top = endPoint_api+ "score/best/navecita";
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ednPoint_top);
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
@@ -51,7 +51,7 @@ public class Score
     }
     public void GuardarScore()
     {
-        WebRequest request = WebRequest.Create(endPoint_api+ "guardarData/galaga");
+        WebRequest request = WebRequest.Create(endPoint_api+ "guardarData/navecita");
         request.Method = "POST";
         string postData = JsonUtility.ToJson(this);
         Debug.Log(">>>>>>>>>>>>"+postData);

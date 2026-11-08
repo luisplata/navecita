@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Galaga 1981
+  m_text: Navecita
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b4539f0ea1b16654a82754dc1d7d1ed4, type: 2}
   m_sharedMaterial: {fileID: 8632771352152209041, guid: b4539f0ea1b16654a82754dc1d7d1ed4,
