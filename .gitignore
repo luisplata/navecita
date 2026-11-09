@@ -66,3 +66,6 @@ crashlytics-build.properties
 
 # Release artifacts
 /release/
+
+# Capturas locales
+/PlayStore/Capturas/
