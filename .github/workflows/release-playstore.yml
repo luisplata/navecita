@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: SemVer bump for the next release
-        required: true
+        description: SemVer bump for the next release (ignored if version is set)
+        required: false
         type: choice
         options:
           - patch
           - minor
           - major
+      version:
+        description: "Explicit version to release (e.g. 0.0.1). Overrides bump."
+        required: false
+        type: string
 
 permissions: {}
 
@@ -42,21 +46,33 @@ jobs:
         id: compute
         run: |
           BUMP="${{ github.event.inputs.bump }}"
+          EXPLICIT="${{ github.event.inputs.version }}"
           LATEST_TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
-          if [ -z "$LATEST_TAG" ]; then
-            echo "No semver tags found — falling back to v1.0.0"
-            MAJOR=1; MINOR=0; PATCH=0
+          if [ -n "$EXPLICIT" ]; then
+            # Primera release de una app nueva: el versionCode de Play arranca de cero,
+            # así que los tags viejos no aplican. La versión explícita manda.
+            if ! echo "$EXPLICIT" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::Invalid explicit version '$EXPLICIT' (expected X.Y.Z)"
+              exit 1
+            fi
+            echo "Explicit version requested: $EXPLICIT (bump '$BUMP' ignored)"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$EXPLICIT"
           else
-            echo "Latest semver tag: $LATEST_TAG"
-            VERSION="${LATEST_TAG#v}"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+            if [ -z "$LATEST_TAG" ]; then
+              echo "No semver tags found — falling back to v1.0.0"
+              MAJOR=1; MINOR=0; PATCH=0
+            else
+              echo "Latest semver tag: $LATEST_TAG"
+              VERSION="${LATEST_TAG#v}"
+              IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+            fi
+            case "$BUMP" in
+              major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+              minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+              patch) PATCH=$((PATCH + 1)) ;;
+              *) echo "::error::Unknown bump '$BUMP'"; exit 1 ;;
+            esac
           fi
-          case "$BUMP" in
-            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
-            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
-            patch) PATCH=$((PATCH + 1)) ;;
-            *) echo "::error::Unknown bump '$BUMP'"; exit 1 ;;
-          esac
           NEXT_TAG="v${MAJOR}.${MINOR}.${PATCH}"
           NEXT_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           # versionCode de Play Store: DEBE ser mayor al publicado (1.0.2 -> 1000002).
