@@ -63,3 +63,6 @@ crashlytics-build.properties
 *.keystore
 *.jks
 *.b64
+
+# Release artifacts
+/release/
