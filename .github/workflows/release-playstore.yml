@@ -47,7 +47,9 @@ jobs:
         run: |
           BUMP="${{ github.event.inputs.bump }}"
           EXPLICIT="${{ github.event.inputs.version }}"
-          LATEST_TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
+          # La última tag por FECHA, no por valor semántico. Con -version:refname una tag
+          # vieja más alta (v1.1.1) secuestraba el cálculo de una línea nueva (v0.0.1).
+          LATEST_TAG=$(git tag --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
           if [ -n "$EXPLICIT" ]; then
             # Primera release de una app nueva: el versionCode de Play arranca de cero,
             # así que los tags viejos no aplican. La versión explícita manda.
@@ -59,8 +61,8 @@ jobs:
             IFS='.' read -r MAJOR MINOR PATCH <<< "$EXPLICIT"
           else
             if [ -z "$LATEST_TAG" ]; then
-              echo "No semver tags found — falling back to v1.0.0"
-              MAJOR=1; MINOR=0; PATCH=0
+              echo "No semver tags found — starting from v0.0.0"
+              MAJOR=0; MINOR=0; PATCH=0
             else
               echo "Latest semver tag: $LATEST_TAG"
               VERSION="${LATEST_TAG#v}"
