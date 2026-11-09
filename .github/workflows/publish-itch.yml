@@ -51,6 +51,13 @@ jobs:
           androidExportType: androidPackage
           buildsPath: build
           versioning: None
+          # Firma release: el APK de itch debe compartir la firma con la versión de Play,
+          # si no los usuarios no pueden migrar entre canales. Sin esto Unity firma con la debug key.
+          androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          androidKeystoreName: .github/release.keystore
+          androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
       - name: Normalize APK
         run: |
           mkdir -p apk-out
